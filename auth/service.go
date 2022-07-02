@@ -50,8 +50,7 @@ func (this *service) GenerateToken(userUUID string) (string, error) {
 }
 
 func (this *service) ValidateToken(encodedToken string) (*jwt.Token, error) {
-	// secretKey := []byte(os.Getenv("SECRET_KEY"))
-	secretKey := []byte("S3C123TKEY")
+	secretKey := []byte(os.Getenv("SECRET_KEY"))
 
 	token, err := jwt.Parse(encodedToken, func(token *jwt.Token) (interface{}, error) {
 		_, ok := token.Method.(*jwt.SigningMethodHMAC)
