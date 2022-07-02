@@ -12,7 +12,7 @@ type LoginRequest struct {
 }
 
 type CreateActivityRequest struct {
-	UserID       string `json:"user_id"`
+	EmployeeID       string `json:"employee_id"`
 	AttendanceID string `json:"attendance_id"`
 	Note         string `json:"note"`
 }

@@ -2,7 +2,7 @@ package domain
 
 type Activity struct {
 	ID           string `gorm:"primaryKey;type:uuid;default:gen_random_uuid()"`
-	UserID       string `gorm:"type:uuid"`
+	EmployeeID       string `gorm:"type:uuid"`
 	AttendanceID string `gorm:"type:uuid"`
 	Note         string `gorm:"type:string"`
 }
@@ -15,12 +15,12 @@ func (this *Activity) GetID() string {
 	return this.ID
 }
 
-func (this *Activity) SetUserID(userID string) {
-	this.UserID = userID
+func (this *Activity) SetEmployeeID(employeeID string) {
+	this.EmployeeID = employeeID
 }
 
-func (this *Activity) GetUserID() string {
-	return this.UserID
+func (this *Activity) GetEmployeeID() string {
+	return this.EmployeeID
 }
 
 func (this *Activity) SetAttendanceID(attendanceID string) {

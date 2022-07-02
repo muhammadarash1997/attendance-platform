@@ -12,7 +12,7 @@ import (
 type AttendanceHandler interface {
 	CheckInHandler(*gin.Context)
 	CheckOutHandler(*gin.Context)
-	GetAllUserAttendanceHandler(*gin.Context)
+	GetAllEmployeeAttendanceHandler(*gin.Context)
 }
 
 type attendanceHandler struct {
@@ -33,9 +33,9 @@ func NewAttendanceHandler(attendanceService services.AttendanceService) *attenda
 //		500: errorResponse
 
 func (this *attendanceHandler) CheckInHandler(c *gin.Context) {
-	currentUser := c.MustGet("currentUser").(domain.User)
+	currentEmployee := c.MustGet("currentEmployee").(domain.Employee)
 
-	checkInResponse, err := this.attendanceService.CheckIn(currentUser.GetID())
+	checkInResponse, err := this.attendanceService.CheckIn(currentEmployee.GetID())
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dto.Message{
 			Code:   http.StatusInternalServerError,
@@ -81,19 +81,19 @@ func (this *attendanceHandler) CheckOutHandler(c *gin.Context) {
 	})
 }
 
-// swagger:route GET /api/attendance attendance getAllUserAttendance
-// Get all attendance of user
+// swagger:route GET /api/attendance attendance getAllEmployeeAttendance
+// Get all attendance of employee
 //
 // Security:
 // - Bearer:
 // responses:
-//		200: getAllUserAttendance
+//		200: getAllEmployeeAttendance
 //		500: errorResponse
 
-func (this *attendanceHandler) GetAllUserAttendanceHandler(c *gin.Context) {
-	currentUser := c.MustGet("currentUser").(domain.User)
+func (this *attendanceHandler) GetAllEmployeeAttendanceHandler(c *gin.Context) {
+	currentEmployee := c.MustGet("currentEmployee").(domain.Employee)
 
-	getAllUserAttendanceResponse, err := this.attendanceService.GetAllUserAttendance(currentUser.ID)
+	getAllEmployeeAttendanceResponse, err := this.attendanceService.GetAllEmployeeAttendance(currentEmployee.ID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dto.Message{
 			Code:   http.StatusInternalServerError,
@@ -106,6 +106,6 @@ func (this *attendanceHandler) GetAllUserAttendanceHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, dto.Message{
 		Code:   http.StatusOK,
 		Status: "Ok",
-		Data:   getAllUserAttendanceResponse,
+		Data:   getAllEmployeeAttendanceResponse,
 	})
 }

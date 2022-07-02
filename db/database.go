@@ -29,7 +29,7 @@ func StartConnection() *gorm.DB {
 	}
 	fmt.Println("Success to connect to database")
 
-	db.AutoMigrate(&domain.User{})
+	db.AutoMigrate(&domain.Employee{})
 	db.AutoMigrate(&domain.Attendance{})
 	db.AutoMigrate(&domain.Activity{})
 	return db

@@ -14,8 +14,8 @@ type AttendanceRepository interface {
 	GetByID(string) (domain.Attendance, error)
 	UpdateAttendance(domain.Attendance) (domain.Attendance, error)
 	GetLatest(string) (domain.Attendance, error)
-	GetUserAttendanceByDate(string, string) ([]domain.Attendance, error)
-	GetAllUserAttendance(string) ([]domain.Attendance, error)
+	GetEmployeeAttendanceByDate(string, string) ([]domain.Attendance, error)
+	GetAllEmployeeAttendance(string) ([]domain.Attendance, error)
 }
 
 type attendanceRepository struct {
@@ -61,9 +61,9 @@ func (this *attendanceRepository) UpdateAttendance(attendance domain.Attendance)
 	return attendance, nil
 }
 
-func (this *attendanceRepository) GetLatest(userID string) (domain.Attendance, error) {
+func (this *attendanceRepository) GetLatest(employeeID string) (domain.Attendance, error) {
 	var attendance domain.Attendance
-	err := this.db.Where("user_id = ?", userID).Order("in_date DESC").First(&attendance).Error
+	err := this.db.Where("employee_id = ?", employeeID).Order("in_date DESC").First(&attendance).Error
 	if err != nil {
 		log.Printf("Error %v", err)
 		err = errors.New("Could not find latest attendance")
@@ -73,13 +73,13 @@ func (this *attendanceRepository) GetLatest(userID string) (domain.Attendance, e
 	return attendance, nil
 }
 
-func (this *attendanceRepository) GetUserAttendanceByDate(userID string, date string) ([]domain.Attendance, error) {
+func (this *attendanceRepository) GetEmployeeAttendanceByDate(employeeID string, date string) ([]domain.Attendance, error) {
 	attendances := []domain.Attendance{}
 
 	lower := fmt.Sprintf("%v 00:00:00", date)
 	upper := fmt.Sprintf("%v 24:00:00", date)
 
-	err := this.db.Raw("SELECT * FROM attendances WHERE user_id = ? AND in_date BETWEEN ? AND ? ORDER BY in_date DESC", userID, lower, upper).Scan(&attendances).Error
+	err := this.db.Raw("SELECT * FROM attendances WHERE employee_id = ? AND in_date BETWEEN ? AND ? ORDER BY in_date DESC", employeeID, lower, upper).Scan(&attendances).Error
 	if err != nil {
 		log.Printf("Error %v", err)
 		err = errors.New("Attendance not found")
@@ -89,13 +89,13 @@ func (this *attendanceRepository) GetUserAttendanceByDate(userID string, date st
 	return attendances, nil
 }
 
-// func (this *attendanceRepository) GetUserAttendanceByDate(userID string, date string) (domain.Attendance, error) {
+// func (this *attendanceRepository) GetEmployeeAttendanceByDate(employeeID string, date string) (domain.Attendance, error) {
 // 	attendance := domain.Attendance{}
 
 // 	lower := fmt.Sprintf("%v 00:00:00", date)
 // 	upper := fmt.Sprintf("%v 24:00:00", date)
 
-// 	err := this.db.Raw("SELECT * FROM attendances WHERE user_id = ? AND in_date BETWEEN ? AND ? ORDER BY in_date DESC LIMIT 1", userID, lower, upper).Scan(&attendance).Error
+// 	err := this.db.Raw("SELECT * FROM attendances WHERE employee_id = ? AND in_date BETWEEN ? AND ? ORDER BY in_date DESC LIMIT 1", employeeID, lower, upper).Scan(&attendance).Error
 // 	if err != nil {
 // 		log.Printf("Error %v", err)
 // 		err = errors.New("Attendance not found")
@@ -105,10 +105,10 @@ func (this *attendanceRepository) GetUserAttendanceByDate(userID string, date st
 // 	return attendance, nil
 // }
 
-func (this *attendanceRepository) GetAllUserAttendance(userID string) ([]domain.Attendance, error) {
+func (this *attendanceRepository) GetAllEmployeeAttendance(employeeID string) ([]domain.Attendance, error) {
 	attendances := []domain.Attendance{}
 
-	err := this.db.Where("user_id = ?", userID).Find(&attendances).Error
+	err := this.db.Where("employee_id = ?", employeeID).Find(&attendances).Error
 	if err != nil {
 		log.Printf("Error %v", err)
 		err = errors.New("Attendances not found")

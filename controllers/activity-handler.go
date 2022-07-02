@@ -15,7 +15,7 @@ type ActivityHandler interface {
 	CreateActivityHandler(*gin.Context)
 	UpdateActivityHandler(c *gin.Context)
 	DeleteActivityHandler(c *gin.Context)
-	GetUserActivitiesByDateHandler(c *gin.Context)
+	GetEmployeeActivitiesByDateHandler(c *gin.Context)
 }
 
 type activityHandler struct {
@@ -139,20 +139,20 @@ func (this *activityHandler) DeleteActivityHandler(c *gin.Context) {
 	})
 }
 
-// swagger:route GET /api/activity/{date} activity getUserActivitiesByDate
-// Get activities of user at certain date
+// swagger:route GET /api/activity/{date} activity getEmployeeActivitiesByDate
+// Get activities of employee at certain date
 //
 // Security:
 // - Bearer:
 // responses:
-//		200: getUserActivitiesByDate
+//		200: getEmployeeActivitiesByDate
 //		500: errorResponse
 
-func (this *activityHandler) GetUserActivitiesByDateHandler(c *gin.Context) {
-	currentUser := c.MustGet("currentUser").(domain.User)
+func (this *activityHandler) GetEmployeeActivitiesByDateHandler(c *gin.Context) {
+	currentEmployee := c.MustGet("currentEmployee").(domain.Employee)
 	date := c.Params.ByName("date")
 
-	activities, err := this.activityService.GetUserActivitiesByDate(currentUser.ID, date)
+	activities, err := this.activityService.GetEmployeeActivitiesByDate(currentEmployee.ID, date)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dto.Message{
 			Code:   http.StatusInternalServerError,

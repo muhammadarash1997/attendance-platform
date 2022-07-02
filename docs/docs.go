@@ -46,8 +46,8 @@ type errorResponse struct {
 }
 
 // Success registering an account
-// swagger:response registerUser
-type registerUser struct {
+// swagger:response registerEmployee
+type registerEmployee struct {
 	// in: Body
 	Body struct {
 		Code   int    `json:"code"`
@@ -57,8 +57,8 @@ type registerUser struct {
 }
 
 // Success logging in an account
-// swagger:response loginUser
-type loginUser struct {
+// swagger:response loginEmployee
+type loginEmployee struct {
 	// in: Body
 	Body struct {
 		Code   int               `json:"code"`
@@ -68,8 +68,8 @@ type loginUser struct {
 }
 
 // Success logging out an account
-// swagger:response logoutUser
-type logoutUser struct {
+// swagger:response logoutEmployee
+type logoutEmployee struct {
 	// in: Body
 	Body struct {
 		Code   int                `json:"code"`
@@ -100,14 +100,14 @@ type checkOut struct {
 	}
 }
 
-// Success getting all attendance of user
-// swagger:response getAllUserAttendance
-type getAllUserAttendance struct {
+// Success getting all attendance of employee
+// swagger:response getAllEmployeeAttendance
+type getAllEmployeeAttendance struct {
 	// in: Body
 	Body struct {
 		Code   int                              `json:"code"`
 		Status string                           `json:"status"`
-		Data   dto.GetAllUserAttendanceResponse `json:"data"`
+		Data   dto.GetAllEmployeeAttendanceResponse `json:"data"`
 	}
 }
 
@@ -144,28 +144,28 @@ type deleteActivity struct {
 	}
 }
 
-// Success getting user activities by date
-// swagger:response getUserActivitiesByDate
-type getUserActivitiesByDate struct {
+// Success getting employee activities by date
+// swagger:response getEmployeeActivitiesByDate
+type getEmployeeActivitiesByDate struct {
 	// in: Body
 	Body struct {
 		Code   int                                 `json:"code"`
 		Status string                              `json:"status"`
-		Data   dto.GetUserActivitiesByDateResponse `json:"data"`
+		Data   dto.GetEmployeeActivitiesByDateResponse `json:"data"`
 	}
 }
 
-// swagger:parameters registerUser
-type registerUserParams struct {
-	// User object that needs to be registered
+// swagger:parameters registerEmployee
+type registerEmployeeParams struct {
+	// Employee object that needs to be registered
 	// in: body
 	// required: true
 	Body dto.RegisterRequest
 }
 
-// swagger:parameters loginUser
-type loginUserParams struct {
-	// User login object that needs to be logged in
+// swagger:parameters loginEmployee
+type loginEmployeeParams struct {
+	// Employee login object that needs to be logged in
 	// in: body
 	// required: true
 	Body dto.LoginRequest
@@ -203,8 +203,8 @@ type deleteActivityParams struct {
 	ID string `json:"activity_id"`
 }
 
-// swagger:parameters getUserActivitiesByDate
-type getUserActivitiesByDateParams struct {
+// swagger:parameters getEmployeeActivitiesByDate
+type getEmployeeActivitiesByDateParams struct {
 	// The date that want to be used as parameter for getting activities in the format YYYY:MM:DD, ex = 2022:12:30
 	// in: path
 	// required: true

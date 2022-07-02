@@ -5,14 +5,13 @@ import (
 	"attendance-platform/dto"
 	"attendance-platform/repositories"
 	"errors"
-	"fmt"
 )
 
 type ActivityService interface {
 	CreateActivity(dto.CreateActivityRequest) (dto.CreateActivityResponse, error)
 	UpdateActivity(dto.UpdateActivityRequest) (dto.UpdateActivityResponse, error)
 	DeleteActivity(string) error
-	GetUserActivitiesByDate(string,string) (dto.GetUserActivitiesByDateResponse, error)
+	GetEmployeeActivitiesByDate(string,string) (dto.GetEmployeeActivitiesByDateResponse, error)
 }
 
 type activityService struct {
@@ -40,7 +39,7 @@ func (this *activityService) CreateActivity(createActivityRequest dto.CreateActi
 	}
 
 	// Mapping CreateActivityRequest to Activity
-	activity.SetUserID(createActivityRequest.UserID)
+	activity.SetEmployeeID(createActivityRequest.EmployeeID)
 	activity.SetAttendanceID(createActivityRequest.AttendanceID)
 	activity.SetNote(createActivityRequest.Note)
 
@@ -51,7 +50,7 @@ func (this *activityService) CreateActivity(createActivityRequest dto.CreateActi
 
 	// Mapping Activity to ActivityDTO
 	activityDTO.ID = activityAdded.GetID()
-	activityDTO.UserID = activityAdded.GetUserID()
+	activityDTO.EmployeeID = activityAdded.GetEmployeeID()
 	activityDTO.AttendanceID = activityAdded.GetAttendanceID()
 	activityDTO.Note = activityAdded.GetNote()
 
@@ -66,11 +65,9 @@ func (this *activityService) UpdateActivity(updateActivityRequest dto.UpdateActi
 	var activityDTO dto.ActivityDTO
 	var updateActivityResponse dto.UpdateActivityResponse
 
-	fmt.Println("INI adalah id", updateActivityRequest.Activity.AttendanceID)
-
 	// Mapping UpdateActivityRequest to Activity
 	activity.SetID(updateActivityRequest.Activity.ID)
-	activity.SetUserID(updateActivityRequest.Activity.UserID)
+	activity.SetEmployeeID(updateActivityRequest.Activity.EmployeeID)
 	activity.SetAttendanceID(updateActivityRequest.Activity.AttendanceID)
 	activity.SetNote(updateActivityRequest.Activity.Note)
 
@@ -91,7 +88,7 @@ func (this *activityService) UpdateActivity(updateActivityRequest dto.UpdateActi
 
 	// Mapping Activity to ActivityDTO
 	activityDTO.ID = activityUpdated.GetID()
-	activityDTO.UserID = activityUpdated.GetUserID()
+	activityDTO.EmployeeID = activityUpdated.GetEmployeeID()
 	activityDTO.AttendanceID = activityUpdated.GetAttendanceID()
 	activityDTO.Note = activityUpdated.GetNote()
 
@@ -126,28 +123,28 @@ func (this *activityService) DeleteActivity(activityID string) error {
 	return nil
 }
 
-func (this *activityService) GetUserActivitiesByDate(userID string, date string) (dto.GetUserActivitiesByDateResponse, error) {
-	var getUserActivitiesByDateResponse dto.GetUserActivitiesByDateResponse
+func (this *activityService) GetEmployeeActivitiesByDate(employeeID string, date string) (dto.GetEmployeeActivitiesByDateResponse, error) {
+	var getEmployeeActivitiesByDateResponse dto.GetEmployeeActivitiesByDateResponse
 	var activitiesDTO []dto.ActivityDTO
 
-	// Find attendance based on user id dan date
-	attendances, err := this.attendanceRepository.GetUserAttendanceByDate(userID, date)
+	// Find attendance based on employee id dan date
+	attendances, err := this.attendanceRepository.GetEmployeeAttendanceByDate(employeeID, date)
 	if err != nil {
-		return getUserActivitiesByDateResponse, err
+		return getEmployeeActivitiesByDateResponse, err
 	}
 
 	for _, v := range attendances {
 		// Find activities based on attendance id
 		activities, err := this.activityRepository.GetActivitiesByAttendanceID(v.ID)
 		if err != nil {
-			return getUserActivitiesByDateResponse, err
+			return getEmployeeActivitiesByDateResponse, err
 		}
 
 		// Mapping []Activity to []ActivityDTO
 		for _, d := range activities {
 			activityDTO := dto.ActivityDTO{
 				ID: d.ID,
-				UserID: d.UserID,
+				EmployeeID: d.EmployeeID,
 				AttendanceID: d.AttendanceID,
 				Note: d.Note,
 			}
@@ -155,8 +152,8 @@ func (this *activityService) GetUserActivitiesByDate(userID string, date string)
 		}
 	}
 
-	// Wrapping []ActivityDTO to GetUserActivitiesByDateResponse
-	getUserActivitiesByDateResponse.Activities = activitiesDTO
+	// Wrapping []ActivityDTO to GetEmployeeActivitiesByDateResponse
+	getEmployeeActivitiesByDateResponse.Activities = activitiesDTO
 
-	return getUserActivitiesByDateResponse, nil
+	return getEmployeeActivitiesByDateResponse, nil
 }

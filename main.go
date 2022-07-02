@@ -16,13 +16,13 @@ import (
 
 func main() {
 	godotenv.Load(".env")
-	
+
 	db := db.StartConnection()
 
-	userRepository := repositories.NewUserRepository(db)
-	userService := services.NewUserService(userRepository)
+	employeeRepository := repositories.NewEmployeeRepository(db)
+	employeeService := services.NewEmployeeService(employeeRepository)
 	authService := auth.NewService()
-	userHandler := controllers.NewUserHandler(userService, authService)
+	employeeHandler := controllers.NewEmployeeHandler(employeeService, authService)
 
 	attendanceRepository := repositories.NewAttendanceRepository(db)
 	attendanceService := services.NewAttendanceService(attendanceRepository)
@@ -48,16 +48,16 @@ func main() {
 	})
 
 	// For User
-	router.POST("/api/user/register", userHandler.RegisterUserHandler)                                                        // Register
-	router.POST("/api/user/login", userHandler.LoginHandler)                                                                  // Login
-	router.GET("/api/user/logout", userHandler.AuthenticateHandler, userHandler.LogoutHandler)                                // Logout
-	router.GET("/api/attendance/checkin", userHandler.AuthenticateHandler, attendanceHandler.CheckInHandler)                  // Check In
-	router.GET("/api/attendance/checkout/:attendance_id", userHandler.AuthenticateHandler, attendanceHandler.CheckOutHandler) // Check Out
-	router.POST("/api/activity", userHandler.AuthenticateHandler, activityHandler.CreateActivityHandler)                      // Menambah aktivitas
-	router.PUT("/api/activity", userHandler.AuthenticateHandler, activityHandler.UpdateActivityHandler)                       // Mengedit aktivitas
-	router.DELETE("/api/activity/:activity_id", userHandler.AuthenticateHandler, activityHandler.DeleteActivityHandler)       // Menghapus aktivitas
-	router.GET("/api/attendance", userHandler.AuthenticateHandler, attendanceHandler.GetAllUserAttendanceHandler)             // Melihat riwayat absensi
-	router.GET("/api/activity/:date", userHandler.AuthenticateHandler, activityHandler.GetUserActivitiesByDateHandler)        // Melihat riwayat aktivitas berdasarkan tanggal
+	router.POST("/api/employee/register", employeeHandler.RegisterEmployeeHandler)                                                // Register
+	router.POST("/api/employee/login", employeeHandler.LoginHandler)                                                              // Login
+	router.GET("/api/employee/logout", employeeHandler.AuthenticateHandler, employeeHandler.LogoutHandler)                        // Logout
+	router.GET("/api/attendance/checkin", employeeHandler.AuthenticateHandler, attendanceHandler.CheckInHandler)                  // Check In
+	router.GET("/api/attendance/checkout/:attendance_id", employeeHandler.AuthenticateHandler, attendanceHandler.CheckOutHandler) // Check Out
+	router.POST("/api/activity", employeeHandler.AuthenticateHandler, activityHandler.CreateActivityHandler)                      // Menambah aktivitas
+	router.PUT("/api/activity", employeeHandler.AuthenticateHandler, activityHandler.UpdateActivityHandler)                       // Mengedit aktivitas
+	router.DELETE("/api/activity/:activity_id", employeeHandler.AuthenticateHandler, activityHandler.DeleteActivityHandler)       // Menghapus aktivitas
+	router.GET("/api/attendance", employeeHandler.AuthenticateHandler, attendanceHandler.GetAllEmployeeAttendanceHandler)         // Melihat riwayat absensi
+	router.GET("/api/activity/:date", employeeHandler.AuthenticateHandler, activityHandler.GetEmployeeActivitiesByDateHandler)    // Melihat riwayat aktivitas berdasarkan tanggal
 
 	router.Run()
 }

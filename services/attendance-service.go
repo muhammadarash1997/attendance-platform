@@ -11,7 +11,7 @@ import (
 type AttendanceService interface {
 	CheckIn(string) (dto.CheckInResponse, error)
 	CheckOut(string) (dto.CheckOutResponse, error)
-	GetAllUserAttendance(string) (dto.GetAllUserAttendanceResponse, error)
+	GetAllEmployeeAttendance(string) (dto.GetAllEmployeeAttendanceResponse, error)
 }
 
 type attendanceService struct {
@@ -22,17 +22,17 @@ func NewAttendanceService(attendanceRepository repositories.AttendanceRepository
 	return &attendanceService{attendanceRepository}
 }
 
-func (this *attendanceService) CheckIn(userID string) (dto.CheckInResponse, error) {
+func (this *attendanceService) CheckIn(employeeID string) (dto.CheckInResponse, error) {
 	var checkInResponse dto.CheckInResponse
 	var attendanceDTO dto.AttendanceDTO
 	var attendance domain.Attendance
 
 	now := time.Now()
-	attendance.SetUserID(userID)
+	attendance.SetEmployeeID(employeeID)
 	attendance.SetInDate(&now)
 
 	// Check have checked out or not
-	attendanceLatest, err := this.attendanceRepository.GetLatest(userID)
+	attendanceLatest, err := this.attendanceRepository.GetLatest(employeeID)
 	if err == nil {
 		if attendanceLatest.GetOutDate() == nil {
 			err = errors.New("Must check out first")
@@ -47,7 +47,7 @@ func (this *attendanceService) CheckIn(userID string) (dto.CheckInResponse, erro
 
 	// Mapping Attendance to AttendanceDTO
 	attendanceDTO.ID = attendanceAdded.GetID()
-	attendanceDTO.UserID = attendanceAdded.GetUserID()
+	attendanceDTO.EmployeeID = attendanceAdded.GetEmployeeID()
 	attendanceDTO.InDate = attendanceAdded.GetInDate()
 	attendanceDTO.OutDate = attendanceAdded.GetOutDate()
 
@@ -83,7 +83,7 @@ func (this *attendanceService) CheckOut(attendanceID string) (dto.CheckOutRespon
 
 	// Mapping Attendance to AttendanceDTO
 	attendanceDTO.ID = attendanceUpdated.GetID()
-	attendanceDTO.UserID = attendanceUpdated.GetUserID()
+	attendanceDTO.EmployeeID = attendanceUpdated.GetEmployeeID()
 	attendanceDTO.InDate = attendanceUpdated.GetInDate()
 	attendanceDTO.OutDate = attendanceUpdated.GetOutDate()
 
@@ -93,28 +93,28 @@ func (this *attendanceService) CheckOut(attendanceID string) (dto.CheckOutRespon
 	return checkOutResponse, err
 }
 
-func (this *attendanceService) GetAllUserAttendance(userID string) (dto.GetAllUserAttendanceResponse, error) {
-	var getAllUserAttendanceResponse dto.GetAllUserAttendanceResponse
+func (this *attendanceService) GetAllEmployeeAttendance(employeeID string) (dto.GetAllEmployeeAttendanceResponse, error) {
+	var getAllEmployeeAttendanceResponse dto.GetAllEmployeeAttendanceResponse
 	var attendancesDTO []dto.AttendanceDTO
 
-	attendances, err := this.attendanceRepository.GetAllUserAttendance(userID)
+	attendances, err := this.attendanceRepository.GetAllEmployeeAttendance(employeeID)
 	if err != nil {
-		return getAllUserAttendanceResponse, err
+		return getAllEmployeeAttendanceResponse, err
 	}
 
 	// Mapping []Attendance to []AttendanceDTO
 	for _, d := range attendances {
 		attendanceDTO := dto.AttendanceDTO{
 			ID: d.ID,
-			UserID: d.UserID,
+			EmployeeID: d.EmployeeID,
 			InDate: d.InDate,
 			OutDate: d.OutDate,
 		}
 		attendancesDTO = append(attendancesDTO, attendanceDTO)
 	}
 
-	// Wrapping AttendanceDTO to GetAllUserAttendanceResponse
-	getAllUserAttendanceResponse.Attendances = attendancesDTO
+	// Wrapping AttendanceDTO to GetAllEmployeeAttendanceResponse
+	getAllEmployeeAttendanceResponse.Attendances = attendancesDTO
 
-	return getAllUserAttendanceResponse, nil
+	return getAllEmployeeAttendanceResponse, nil
 }

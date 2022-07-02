@@ -1,11 +1,11 @@
 package dto
 
 type LoginResponse struct {
-	User UserDTO `json:"user"`
+	Employee EmployeeDTO `json:"employee"`
 }
 
 type LogoutResponse struct {
-	User UserDTO `json:"user"`
+	Employee EmployeeDTO `json:"employee"`
 }
 
 type CreateActivityResponse struct {
@@ -24,10 +24,10 @@ type CheckOutResponse struct {
 	Attendance AttendanceDTO `json:"attendance"`
 }
 
-type GetUserActivitiesByDateResponse struct {
+type GetEmployeeActivitiesByDateResponse struct {
 	Activities []ActivityDTO `json:"activities"`
 }
 
-type GetAllUserAttendanceResponse struct {
+type GetAllEmployeeAttendanceResponse struct {
 	Attendances []AttendanceDTO `json:"attendances"`
 }

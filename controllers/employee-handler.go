@@ -14,31 +14,31 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UserHandler struct {
-	RegisterUserHandler (*gin.Context)
+type EmployeeHandler struct {
+	RegisterEmployeeHandler (*gin.Context)
 	LoginHandler        (*gin.Context)
 	LogoutHandler       (*gin.Context)
 	AuthenticateHandler (*gin.Context)
 }
 
-type userHandler struct {
-	userService services.UserService
+type employeeHandler struct {
+	employeeService services.EmployeeService
 	authService auth.Service
 }
 
-func NewUserHandler(userService services.UserService, authService auth.Service) *userHandler {
-	return &userHandler{userService, authService}
+func NewEmployeeHandler(employeeService services.EmployeeService, authService auth.Service) *employeeHandler {
+	return &employeeHandler{employeeService, authService}
 }
 
-// swagger:route POST /api/user/register user registerUser
-// Create user
+// swagger:route POST /api/employee/register employee registerEmployee
+// Create employee
 //
 // responses:
-//		200: registerUser
+//		200: registerEmployee
 //		422: errorResponse
 //		500: errorResponse
 
-func (this *userHandler) RegisterUserHandler(c *gin.Context) {
+func (this *employeeHandler) RegisterEmployeeHandler(c *gin.Context) {
 	var registerRequest dto.RegisterRequest
 
 	err := c.ShouldBindJSON(&registerRequest)
@@ -53,7 +53,7 @@ func (this *userHandler) RegisterUserHandler(c *gin.Context) {
 		return
 	}
 
-	err = this.userService.RegisterUser(registerRequest)
+	err = this.employeeService.RegisterEmployee(registerRequest)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dto.Message{
 			Code:   http.StatusInternalServerError,
@@ -70,15 +70,15 @@ func (this *userHandler) RegisterUserHandler(c *gin.Context) {
 	})
 }
 
-// swagger:route POST /api/user/login user loginUser
-// Logs user into the system
+// swagger:route POST /api/employee/login employee loginEmployee
+// Logs employee into the system
 //
 // responses:
-//		200: loginUser
+//		200: loginEmployee
 //		422: errorResponse
 //		500: errorResponse
 
-func (this *userHandler) LoginHandler(c *gin.Context) {
+func (this *employeeHandler) LoginHandler(c *gin.Context) {
 	var loginRequest dto.LoginRequest
 
 	err := c.ShouldBindJSON(&loginRequest)
@@ -93,7 +93,7 @@ func (this *userHandler) LoginHandler(c *gin.Context) {
 		return
 	}
 
-	loginResponse, err := this.userService.Login(loginRequest)
+	loginResponse, err := this.employeeService.Login(loginRequest)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dto.Message{
 			Code:   http.StatusInternalServerError,
@@ -103,7 +103,7 @@ func (this *userHandler) LoginHandler(c *gin.Context) {
 		return
 	}
 
-	tokenGenerated, err := this.authService.GenerateToken(loginResponse.User.ID)
+	tokenGenerated, err := this.authService.GenerateToken(loginResponse.Employee.ID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dto.Message{
 			Code:   http.StatusInternalServerError,
@@ -112,7 +112,7 @@ func (this *userHandler) LoginHandler(c *gin.Context) {
 		})
 		return
 	}
-	loginResponse.User.Token = tokenGenerated
+	loginResponse.Employee.Token = tokenGenerated
 
 	c.JSON(http.StatusOK, dto.Message{
 		Code:   http.StatusOK,
@@ -121,22 +121,22 @@ func (this *userHandler) LoginHandler(c *gin.Context) {
 	})
 }
 
-// swagger:route GET /api/user/logout user logoutUser
-// Logs out user from the system
+// swagger:route GET /api/employee/logout employee logoutEmployee
+// Logs out employee from the system
 //
 // Security:
 // - Bearer:
 // responses:
-//		200: logoutUser
+//		200: logoutEmployee
 //		500: errorResponse
 
-func (this *userHandler) LogoutHandler(c *gin.Context) {
-	currentUser := c.MustGet("currentUser").(domain.User)
+func (this *employeeHandler) LogoutHandler(c *gin.Context) {
+	currentEmployee := c.MustGet("currentEmployee").(domain.Employee)
 
 	// Rotating id and generate token
 	var reverseID []byte
-	for i := len(currentUser.ID) - 1; i >= 0; i-- {
-		reverseID = append(reverseID, currentUser.ID[i])
+	for i := len(currentEmployee.ID) - 1; i >= 0; i-- {
+		reverseID = append(reverseID, currentEmployee.ID[i])
 	}
 
 	tokenGenerated, err := this.authService.GenerateToken(string(reverseID))
@@ -150,7 +150,7 @@ func (this *userHandler) LogoutHandler(c *gin.Context) {
 	}
 
 	var logoutResponse dto.LogoutResponse
-	logoutResponse.User.Token = tokenGenerated
+	logoutResponse.Employee.Token = tokenGenerated
 
 	c.JSON(http.StatusOK, dto.Message{
 		Code:   http.StatusOK,
@@ -159,7 +159,7 @@ func (this *userHandler) LogoutHandler(c *gin.Context) {
 	})
 }
 
-func (this *userHandler) AuthenticateHandler(c *gin.Context) {
+func (this *employeeHandler) AuthenticateHandler(c *gin.Context) {
 	// Ambil token dari header
 	tokenInput := c.GetHeader("Authorization")
 
@@ -199,8 +199,8 @@ func (this *userHandler) AuthenticateHandler(c *gin.Context) {
 		return
 	}
 
-	id := claim["user_uuid"].(string)
-	user, err := this.userService.GetUser(id)
+	id := claim["employee_uuid"].(string)
+	employee, err := this.employeeService.GetEmployee(id)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, dto.Message{
 			Code:   http.StatusUnauthorized,
@@ -210,5 +210,5 @@ func (this *userHandler) AuthenticateHandler(c *gin.Context) {
 		return
 	}
 
-	c.Set("currentUser", user)
+	c.Set("currentEmployee", employee)
 }
