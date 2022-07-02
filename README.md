@@ -39,3 +39,6 @@ Repositories is for accessing the database and helps to extend the CRUD operatio
 
 ### Entity Relationship Diagram
 ![alt text](https://github.com/muhammadarash1997/attendance-platform/blob/master/ERD.png?raw=true)
+
+### Flow Chart
+![alt text](https://github.com/muhammadarash1997/attendance-platform/blob/master/FLOWCHART.png?raw=true)
