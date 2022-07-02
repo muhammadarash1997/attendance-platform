@@ -7,3 +7,11 @@ This is a simple project I used as a service for employees to be able to log the
 - Gin Web Framework
 - GORM
 - Swagger 2.0
+- JSON Web Token
+
+## Usecases
+- Employee were be able to register and login
+- Employee were be able to check in and check out
+- Employee were be able to add, edit and delete activity
+- Employee were be able to get activities history by date
+- Employee were be able to get attendance history
