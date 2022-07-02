@@ -1,0 +1,830 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a API for employee to to check in attendance",
+    "title": "Attendance Platform API.",
+    "contact": {
+      "email": "muhammadarash1997@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "host": "attendancesplatform.herokuapp.com",
+  "basePath": "/",
+  "paths": {
+    "/api/activity": {
+      "put": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Update an activity of attendance",
+        "tags": [
+          "activity"
+        ],
+        "operationId": "updateActivity",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/updateActivity"
+          },
+          "422": {
+            "$ref": "#/responses/errorResponse"
+          },
+          "500": {
+            "$ref": "#/responses/errorResponse"
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Create an activity of attendance",
+        "tags": [
+          "activity"
+        ],
+        "operationId": "createActivity",
+        "parameters": [
+          {
+            "description": "Activity object that needs to be created",
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateActivityRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/createActivity"
+          },
+          "422": {
+            "$ref": "#/responses/errorResponse"
+          },
+          "500": {
+            "$ref": "#/responses/errorResponse"
+          }
+        }
+      }
+    },
+    "/api/activity/{activity_id}": {
+      "delete": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Delete an activity of attendance",
+        "tags": [
+          "activity"
+        ],
+        "operationId": "deleteActivity",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ID",
+            "description": "The activity id that needs to be deleted",
+            "name": "activity_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/deleteActivity"
+          },
+          "500": {
+            "$ref": "#/responses/errorResponse"
+          }
+        }
+      }
+    },
+    "/api/activity/{date}": {
+      "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Get activities of user at certain date",
+        "tags": [
+          "activity"
+        ],
+        "operationId": "getUserActivitiesByDate",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ID",
+            "description": "The date that want to be used as parameter for getting activities",
+            "name": "date",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getUserActivitiesByDate"
+          },
+          "500": {
+            "$ref": "#/responses/errorResponse"
+          }
+        }
+      }
+    },
+    "/api/attendance": {
+      "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Get all attendance of user",
+        "tags": [
+          "attendance"
+        ],
+        "operationId": "getAllUserAttendance",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getAllUserAttendance"
+          },
+          "500": {
+            "$ref": "#/responses/errorResponse"
+          }
+        }
+      }
+    },
+    "/api/attendance/checkin": {
+      "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Check in for attendance",
+        "tags": [
+          "attendance"
+        ],
+        "operationId": "checkIn",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/checkIn"
+          },
+          "500": {
+            "$ref": "#/responses/errorResponse"
+          }
+        }
+      }
+    },
+    "/api/attendance/checkout/{attendance_id}": {
+      "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Check out for attendance",
+        "tags": [
+          "attendance"
+        ],
+        "operationId": "checkOut",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ID",
+            "description": "The attendance id that needs to be checked out",
+            "name": "attendance_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/checkOut"
+          },
+          "500": {
+            "$ref": "#/responses/errorResponse"
+          }
+        }
+      }
+    },
+    "/api/test": {
+      "get": {
+        "description": "Test API",
+        "tags": [
+          "test"
+        ],
+        "operationId": "testAPI",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/testAPI"
+          }
+        }
+      }
+    },
+    "/api/user/login": {
+      "post": {
+        "description": "Logs user into the system",
+        "tags": [
+          "user"
+        ],
+        "operationId": "loginUser",
+        "parameters": [
+          {
+            "description": "User login object that needs to be logged in",
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/loginUser"
+          },
+          "422": {
+            "$ref": "#/responses/errorResponse"
+          },
+          "500": {
+            "$ref": "#/responses/errorResponse"
+          }
+        }
+      }
+    },
+    "/api/user/logout": {
+      "get": {
+        "description": "Logs out user from the system",
+        "tags": [
+          "user"
+        ],
+        "operationId": "logoutUser",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/logoutUser"
+          },
+          "500": {
+            "$ref": "#/responses/errorResponse"
+          }
+        }
+      }
+    },
+    "/api/user/register": {
+      "post": {
+        "description": "Create user",
+        "tags": [
+          "user"
+        ],
+        "operationId": "registerUser",
+        "parameters": [
+          {
+            "description": "User object that needs to be registered",
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/registerUser"
+          },
+          "422": {
+            "$ref": "#/responses/errorResponse"
+          },
+          "500": {
+            "$ref": "#/responses/errorResponse"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ActivityDTO": {
+      "type": "object",
+      "properties": {
+        "attendance_id": {
+          "type": "string",
+          "x-go-name": "AttendanceID"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "note": {
+          "type": "string",
+          "x-go-name": "Note"
+        },
+        "user_id": {
+          "type": "string",
+          "x-go-name": "UserID"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    },
+    "AttendanceDTO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "in_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "InDate"
+        },
+        "out_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "OutDate"
+        },
+        "user_id": {
+          "type": "string",
+          "x-go-name": "UserID"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    },
+    "CheckInResponse": {
+      "type": "object",
+      "properties": {
+        "attendance": {
+          "$ref": "#/definitions/AttendanceDTO"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    },
+    "CheckOutResponse": {
+      "type": "object",
+      "properties": {
+        "attendance": {
+          "$ref": "#/definitions/AttendanceDTO"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    },
+    "CreateActivityRequest": {
+      "type": "object",
+      "properties": {
+        "attendance_id": {
+          "type": "string",
+          "x-go-name": "AttendanceID"
+        },
+        "note": {
+          "type": "string",
+          "x-go-name": "Note"
+        },
+        "user_id": {
+          "type": "string",
+          "x-go-name": "UserID"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    },
+    "CreateActivityResponse": {
+      "type": "object",
+      "properties": {
+        "activity": {
+          "$ref": "#/definitions/ActivityDTO"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    },
+    "GetAllUserAttendanceResponse": {
+      "type": "object",
+      "properties": {
+        "attendances": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AttendanceDTO"
+          },
+          "x-go-name": "Attendances"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    },
+    "GetUserActivitiesByDateResponse": {
+      "type": "object",
+      "properties": {
+        "activities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActivityDTO"
+          },
+          "x-go-name": "Activities"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    },
+    "LoginRequest": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string",
+          "x-go-name": "Password"
+        },
+        "username": {
+          "type": "string",
+          "x-go-name": "Username"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    },
+    "LoginResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/UserDTO"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    },
+    "LogoutResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/UserDTO"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    },
+    "RegisterRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "password": {
+          "type": "string",
+          "x-go-name": "Password"
+        },
+        "username": {
+          "type": "string",
+          "x-go-name": "Username"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    },
+    "UpdateActivityRequest": {
+      "type": "object",
+      "properties": {
+        "activity": {
+          "$ref": "#/definitions/ActivityDTO"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    },
+    "UpdateActivityResponse": {
+      "type": "object",
+      "properties": {
+        "activity": {
+          "$ref": "#/definitions/ActivityDTO"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    },
+    "UserDTO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "token": {
+          "type": "string",
+          "x-go-name": "Token"
+        },
+        "username": {
+          "type": "string",
+          "x-go-name": "Username"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    }
+  },
+  "responses": {
+    "checkIn": {
+      "description": "Success checking in for attendance",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/CheckInResponse"
+          },
+          "status": {
+            "type": "string",
+            "x-go-name": "Status"
+          }
+        }
+      },
+      "headers": {
+        "Body": {
+          "description": "in: Body"
+        }
+      }
+    },
+    "checkOut": {
+      "description": "Success checking out for attendance",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/CheckOutResponse"
+          },
+          "status": {
+            "type": "string",
+            "x-go-name": "Status"
+          }
+        }
+      },
+      "headers": {
+        "Body": {
+          "description": "in: Body"
+        }
+      }
+    },
+    "createActivity": {
+      "description": "Success creating an activity of attendance",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/CreateActivityResponse"
+          },
+          "status": {
+            "type": "string",
+            "x-go-name": "Status"
+          }
+        }
+      },
+      "headers": {
+        "Body": {
+          "description": "in: Body"
+        }
+      }
+    },
+    "deleteActivity": {
+      "description": "Success deleting an activity of attendance",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "type": "string",
+            "x-go-name": "Data"
+          },
+          "status": {
+            "type": "string",
+            "x-go-name": "Status"
+          }
+        }
+      },
+      "headers": {
+        "Body": {
+          "description": "in: Body"
+        }
+      }
+    },
+    "errorResponse": {
+      "description": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "type": "string",
+            "x-go-name": "Data"
+          },
+          "status": {
+            "type": "string",
+            "x-go-name": "Status"
+          }
+        }
+      },
+      "headers": {
+        "Body": {
+          "description": "in: Body"
+        }
+      }
+    },
+    "getAllUserAttendance": {
+      "description": "Success getting all attendance of user",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/GetAllUserAttendanceResponse"
+          },
+          "status": {
+            "type": "string",
+            "x-go-name": "Status"
+          }
+        }
+      },
+      "headers": {
+        "Body": {
+          "description": "in: Body"
+        }
+      }
+    },
+    "getUserActivitiesByDate": {
+      "description": "Success getting user activities by date",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/GetUserActivitiesByDateResponse"
+          },
+          "status": {
+            "type": "string",
+            "x-go-name": "Status"
+          }
+        }
+      },
+      "headers": {
+        "Body": {
+          "description": "in: Body"
+        }
+      }
+    },
+    "loginUser": {
+      "description": "Success logging in an account",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/LoginResponse"
+          },
+          "status": {
+            "type": "string",
+            "x-go-name": "Status"
+          }
+        }
+      },
+      "headers": {
+        "Body": {
+          "description": "in: Body"
+        }
+      }
+    },
+    "logoutUser": {
+      "description": "Success logging out an account",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/LogoutResponse"
+          },
+          "status": {
+            "type": "string",
+            "x-go-name": "Status"
+          }
+        }
+      },
+      "headers": {
+        "Body": {
+          "description": "in: Body"
+        }
+      }
+    },
+    "registerUser": {
+      "description": "Success registering an account",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "type": "string",
+            "x-go-name": "Data"
+          },
+          "status": {
+            "type": "string",
+            "x-go-name": "Status"
+          }
+        }
+      },
+      "headers": {
+        "Body": {
+          "description": "in: Body"
+        }
+      }
+    },
+    "testAPI": {
+      "description": "Success testing API",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "x-go-name": "Message"
+          }
+        }
+      },
+      "headers": {
+        "Body": {
+          "description": "in: Body"
+        }
+      }
+    },
+    "updateActivity": {
+      "description": "Success updating an activity of attendance",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/UpdateActivityResponse"
+          },
+          "status": {
+            "type": "string",
+            "x-go-name": "Status"
+          }
+        }
+      },
+      "headers": {
+        "Body": {
+          "description": "in: Body"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "description": "Type 'Bearer' before you enter your token. ex = Bearer tokentokentoken",
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}
