@@ -27,3 +27,12 @@ The design contains several layers and components and very much similar to onion
 1. Controllers
 2. Services
 3. Repositories
+
+#### Controllers
+Controllers is where all the http handlers exist. This layer is responsible to hold all the http handlers and request validation.
+
+#### Services
+Services mediates communication between a controller and repository layer. The service layer contains business logic.
+
+#### Repositories
+Repositories is for accessing the database and helps to extend the CRUD operations on the database.
