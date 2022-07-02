@@ -10,8 +10,10 @@ This is a simple project I used as a service for employees to be able to log the
 - JSON Web Token
 
 ## Usecases
-- Employee were be able to register and login
-- Employee were be able to check in and check out
+1. Employee were be able to register and login
+2. Employee were be able to check in
 - Employee were be able to add, edit and delete activity
-- Employee were be able to get activities history by date
-- Employee were be able to get attendance history
+3. Employee were be able to check out
+4. Employee were be able to get activities history by date
+5. Employee were be able to get attendance history
+6. Employee were be able to logout
