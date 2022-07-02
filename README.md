@@ -10,12 +10,15 @@ This is a simple project I used as a service for employees to be able to log the
 - JSON Web Token
 
 ## Usecases
-1. Employee were be able to register and login
-2. Employee were be able to check in
-    - Employee were be able to add activity
-    - Employee were be able to edit activity
-    - Employee were be able to delete activity
-3. Employee were be able to check out
-4. Employee were be able to get activities history by date
-5. Employee were be able to get attendance history
-6. Employee were be able to logout
+1. Employee were be able to register and login.
+2. Employee were be able to check in attendance.
+    - Employee were be able to add activity.
+    - Employee were be able to edit activity.
+    - Employee were be able to delete activity.
+3. Employee were be able to check out attendance.
+4. Employee were be able to get activities history by date.
+5. Employee were be able to get attendance history.
+6. Employee were be able to logout.
+
+## Code Structure
+The design contains several layers and components and very much similar to onion or clean architecture attempt.
