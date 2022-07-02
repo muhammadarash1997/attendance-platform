@@ -22,3 +22,8 @@ This is a simple project I used as a service for employees to be able to log the
 
 ## Code Structure
 The design contains several layers and components and very much similar to onion or clean architecture attempt.
+
+### Components
+1. Controllers
+2. Services
+3. Repositories
