@@ -173,7 +173,7 @@ type loginUserParams struct {
 
 // swagger:parameters checkOut
 type checkOutParams struct {
-	// The attendance id that needs to be checked out
+	// The attendance id in the form of uuid that needs to be checked out
 	// in: path
 	// required: true
 	ID string `json:"attendance_id"`
@@ -197,7 +197,7 @@ type updateActivityParams struct {
 
 // swagger:parameters deleteActivity
 type deleteActivityParams struct {
-	// The activity id that needs to be deleted
+	// The activity id in the form of uuid that needs to be deleted
 	// in: path
 	// required: true
 	ID string `json:"activity_id"`
@@ -205,7 +205,7 @@ type deleteActivityParams struct {
 
 // swagger:parameters getUserActivitiesByDate
 type getUserActivitiesByDateParams struct {
-	// The date that want to be used as parameter for getting activities
+	// The date that want to be used as parameter for getting activities in the format YYYY:MM:DD, ex = 2022:12:30
 	// in: path
 	// required: true
 	ID string `json:"date"`

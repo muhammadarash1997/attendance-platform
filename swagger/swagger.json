@@ -95,7 +95,7 @@
           {
             "type": "string",
             "x-go-name": "ID",
-            "description": "The activity id that needs to be deleted",
+            "description": "The activity id in the form of uuid that needs to be deleted",
             "name": "activity_id",
             "in": "path",
             "required": true
@@ -127,7 +127,7 @@
           {
             "type": "string",
             "x-go-name": "ID",
-            "description": "The date that want to be used as parameter for getting activities",
+            "description": "The date that want to be used as parameter for getting activities in the format YYYY:MM:DD, ex = 2022:12:30",
             "name": "date",
             "in": "path",
             "required": true
@@ -203,7 +203,7 @@
           {
             "type": "string",
             "x-go-name": "ID",
-            "description": "The attendance id that needs to be checked out",
+            "description": "The attendance id in the form of uuid that needs to be checked out",
             "name": "attendance_id",
             "in": "path",
             "required": true
