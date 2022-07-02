@@ -3,7 +3,7 @@
 // This is a API for employee to to check in attendance
 //
 //   Schemes: https
-//   Host: attendancesplatform.herokuapp.com
+//   Host: attendance-platform.herokuapp.com
 //   BasePath: /
 //   Version: 1.0.0
 //   Contact: muhammadarash1997@gmail.com
