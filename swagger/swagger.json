@@ -266,6 +266,11 @@
     },
     "/api/user/logout": {
       "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "description": "Logs out user from the system",
         "tags": [
           "user"

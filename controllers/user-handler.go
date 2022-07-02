@@ -124,6 +124,8 @@ func (this *userHandler) LoginHandler(c *gin.Context) {
 // swagger:route GET /api/user/logout user logoutUser
 // Logs out user from the system
 //
+// Security:
+// - Bearer:
 // responses:
 //		200: logoutUser
 //		500: errorResponse
