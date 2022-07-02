@@ -12,7 +12,7 @@ This is a simple project I used as a service for employees to be able to log the
 ## Usecases
 1. Employee were be able to register and login
 2. Employee were be able to check in
-+ Employee were be able to add, edit and delete activity
+    - Employee were be able to add, edit and delete activity
 3. Employee were be able to check out
 4. Employee were be able to get activities history by date
 5. Employee were be able to get attendance history
