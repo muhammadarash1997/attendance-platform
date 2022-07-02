@@ -118,11 +118,11 @@
             "Bearer": []
           }
         ],
-        "description": "Get activities of user at certain date",
+        "description": "Get activities of employee at certain date",
         "tags": [
           "activity"
         ],
-        "operationId": "getUserActivitiesByDate",
+        "operationId": "getEmployeeActivitiesByDate",
         "parameters": [
           {
             "type": "string",
@@ -135,7 +135,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/getUserActivitiesByDate"
+            "$ref": "#/responses/getEmployeeActivitiesByDate"
           },
           "500": {
             "$ref": "#/responses/errorResponse"
@@ -150,14 +150,14 @@
             "Bearer": []
           }
         ],
-        "description": "Get all attendance of user",
+        "description": "Get all attendance of employee",
         "tags": [
           "attendance"
         ],
-        "operationId": "getAllUserAttendance",
+        "operationId": "getAllEmployeeAttendance",
         "responses": {
           "200": {
-            "$ref": "#/responses/getAllUserAttendance"
+            "$ref": "#/responses/getAllEmployeeAttendance"
           },
           "500": {
             "$ref": "#/responses/errorResponse"
@@ -219,6 +219,90 @@
         }
       }
     },
+    "/api/employee/login": {
+      "post": {
+        "description": "Logs employee into the system",
+        "tags": [
+          "employee"
+        ],
+        "operationId": "loginEmployee",
+        "parameters": [
+          {
+            "description": "Employee login object that needs to be logged in",
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/loginEmployee"
+          },
+          "422": {
+            "$ref": "#/responses/errorResponse"
+          },
+          "500": {
+            "$ref": "#/responses/errorResponse"
+          }
+        }
+      }
+    },
+    "/api/employee/logout": {
+      "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Logs out employee from the system",
+        "tags": [
+          "employee"
+        ],
+        "operationId": "logoutEmployee",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/logoutEmployee"
+          },
+          "500": {
+            "$ref": "#/responses/errorResponse"
+          }
+        }
+      }
+    },
+    "/api/employee/register": {
+      "post": {
+        "description": "Create employee",
+        "tags": [
+          "employee"
+        ],
+        "operationId": "registerEmployee",
+        "parameters": [
+          {
+            "description": "Employee object that needs to be registered",
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/registerEmployee"
+          },
+          "422": {
+            "$ref": "#/responses/errorResponse"
+          },
+          "500": {
+            "$ref": "#/responses/errorResponse"
+          }
+        }
+      }
+    },
     "/api/test": {
       "get": {
         "description": "Test API",
@@ -232,90 +316,6 @@
           }
         }
       }
-    },
-    "/api/user/login": {
-      "post": {
-        "description": "Logs user into the system",
-        "tags": [
-          "user"
-        ],
-        "operationId": "loginUser",
-        "parameters": [
-          {
-            "description": "User login object that needs to be logged in",
-            "name": "Body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/LoginRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/loginUser"
-          },
-          "422": {
-            "$ref": "#/responses/errorResponse"
-          },
-          "500": {
-            "$ref": "#/responses/errorResponse"
-          }
-        }
-      }
-    },
-    "/api/user/logout": {
-      "get": {
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "description": "Logs out user from the system",
-        "tags": [
-          "user"
-        ],
-        "operationId": "logoutUser",
-        "responses": {
-          "200": {
-            "$ref": "#/responses/logoutUser"
-          },
-          "500": {
-            "$ref": "#/responses/errorResponse"
-          }
-        }
-      }
-    },
-    "/api/user/register": {
-      "post": {
-        "description": "Create user",
-        "tags": [
-          "user"
-        ],
-        "operationId": "registerUser",
-        "parameters": [
-          {
-            "description": "User object that needs to be registered",
-            "name": "Body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/RegisterRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/registerUser"
-          },
-          "422": {
-            "$ref": "#/responses/errorResponse"
-          },
-          "500": {
-            "$ref": "#/responses/errorResponse"
-          }
-        }
-      }
     }
   },
   "definitions": {
@@ -326,6 +326,10 @@
           "type": "string",
           "x-go-name": "AttendanceID"
         },
+        "employee_id": {
+          "type": "string",
+          "x-go-name": "EmployeeID"
+        },
         "id": {
           "type": "string",
           "x-go-name": "ID"
@@ -333,10 +337,6 @@
         "note": {
           "type": "string",
           "x-go-name": "Note"
-        },
-        "user_id": {
-          "type": "string",
-          "x-go-name": "UserID"
         }
       },
       "x-go-package": "attendance-platform/dto"
@@ -344,6 +344,10 @@
     "AttendanceDTO": {
       "type": "object",
       "properties": {
+        "employee_id": {
+          "type": "string",
+          "x-go-name": "EmployeeID"
+        },
         "id": {
           "type": "string",
           "x-go-name": "ID"
@@ -357,10 +361,6 @@
           "type": "string",
           "format": "date-time",
           "x-go-name": "OutDate"
-        },
-        "user_id": {
-          "type": "string",
-          "x-go-name": "UserID"
         }
       },
       "x-go-package": "attendance-platform/dto"
@@ -390,13 +390,13 @@
           "type": "string",
           "x-go-name": "AttendanceID"
         },
+        "employee_id": {
+          "type": "string",
+          "x-go-name": "EmployeeID"
+        },
         "note": {
           "type": "string",
           "x-go-name": "Note"
-        },
-        "user_id": {
-          "type": "string",
-          "x-go-name": "UserID"
         }
       },
       "x-go-package": "attendance-platform/dto"
@@ -410,7 +410,29 @@
       },
       "x-go-package": "attendance-platform/dto"
     },
-    "GetAllUserAttendanceResponse": {
+    "EmployeeDTO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "token": {
+          "type": "string",
+          "x-go-name": "Token"
+        },
+        "username": {
+          "type": "string",
+          "x-go-name": "Username"
+        }
+      },
+      "x-go-package": "attendance-platform/dto"
+    },
+    "GetAllEmployeeAttendanceResponse": {
       "type": "object",
       "properties": {
         "attendances": {
@@ -423,7 +445,7 @@
       },
       "x-go-package": "attendance-platform/dto"
     },
-    "GetUserActivitiesByDateResponse": {
+    "GetEmployeeActivitiesByDateResponse": {
       "type": "object",
       "properties": {
         "activities": {
@@ -453,8 +475,8 @@
     "LoginResponse": {
       "type": "object",
       "properties": {
-        "user": {
-          "$ref": "#/definitions/UserDTO"
+        "employee": {
+          "$ref": "#/definitions/EmployeeDTO"
         }
       },
       "x-go-package": "attendance-platform/dto"
@@ -462,8 +484,8 @@
     "LogoutResponse": {
       "type": "object",
       "properties": {
-        "user": {
-          "$ref": "#/definitions/UserDTO"
+        "employee": {
+          "$ref": "#/definitions/EmployeeDTO"
         }
       },
       "x-go-package": "attendance-platform/dto"
@@ -500,28 +522,6 @@
       "properties": {
         "activity": {
           "$ref": "#/definitions/ActivityDTO"
-        }
-      },
-      "x-go-package": "attendance-platform/dto"
-    },
-    "UserDTO": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "x-go-name": "ID"
-        },
-        "name": {
-          "type": "string",
-          "x-go-name": "Name"
-        },
-        "token": {
-          "type": "string",
-          "x-go-name": "Token"
-        },
-        "username": {
-          "type": "string",
-          "x-go-name": "Username"
         }
       },
       "x-go-package": "attendance-platform/dto"
@@ -655,8 +655,8 @@
         }
       }
     },
-    "getAllUserAttendance": {
-      "description": "Success getting all attendance of user",
+    "getAllEmployeeAttendance": {
+      "description": "Success getting all attendance of employee",
       "schema": {
         "type": "object",
         "properties": {
@@ -666,7 +666,7 @@
             "x-go-name": "Code"
           },
           "data": {
-            "$ref": "#/definitions/GetAllUserAttendanceResponse"
+            "$ref": "#/definitions/GetAllEmployeeAttendanceResponse"
           },
           "status": {
             "type": "string",
@@ -680,8 +680,8 @@
         }
       }
     },
-    "getUserActivitiesByDate": {
-      "description": "Success getting user activities by date",
+    "getEmployeeActivitiesByDate": {
+      "description": "Success getting employee activities by date",
       "schema": {
         "type": "object",
         "properties": {
@@ -691,7 +691,7 @@
             "x-go-name": "Code"
           },
           "data": {
-            "$ref": "#/definitions/GetUserActivitiesByDateResponse"
+            "$ref": "#/definitions/GetEmployeeActivitiesByDateResponse"
           },
           "status": {
             "type": "string",
@@ -705,7 +705,7 @@
         }
       }
     },
-    "loginUser": {
+    "loginEmployee": {
       "description": "Success logging in an account",
       "schema": {
         "type": "object",
@@ -730,7 +730,7 @@
         }
       }
     },
-    "logoutUser": {
+    "logoutEmployee": {
       "description": "Success logging out an account",
       "schema": {
         "type": "object",
@@ -755,7 +755,7 @@
         }
       }
     },
-    "registerUser": {
+    "registerEmployee": {
       "description": "Success registering an account",
       "schema": {
         "type": "object",
