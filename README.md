@@ -37,4 +37,5 @@ Services mediates communication between a controller and repository layer. The s
 #### Repositories
 Repositories is for accessing the database and helps to extend the CRUD operations on the database.
 
+### Entity Relationship Diagram
 ![alt text](https://github.com/muhammadarash1997/attendance-platform/blob/master/ERD.png?raw=true)
