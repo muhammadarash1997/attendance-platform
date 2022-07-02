@@ -47,7 +47,7 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{"message": "ok"})
 	})
 
-	// For User
+	// For Employee
 	router.POST("/api/employee/register", employeeHandler.RegisterEmployeeHandler)                                                // Register
 	router.POST("/api/employee/login", employeeHandler.LoginHandler)                                                              // Login
 	router.GET("/api/employee/logout", employeeHandler.AuthenticateHandler, employeeHandler.LogoutHandler)                        // Logout
