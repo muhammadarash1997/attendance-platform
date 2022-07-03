@@ -14,6 +14,12 @@ Create .env file in the root directory of your project. Add environment-specific
 - SECRET_KEY=secret123
 ```
 
+## Running App
+
+```bash
+go run main.go
+```
+
 ## Technologies Used
 - Go 1.18
 - PostgreSQL 14
