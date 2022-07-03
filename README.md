@@ -1,5 +1,5 @@
 # Attendance Platform
-> This is a simple project I used as a service for employees to be able to log their attendance. There are services for employees such as check in and check out attendance. Employees will be able to create, edit, and delete some activities for attendance. Getting activity history by date and getting attendance history are some of the other features. Live demo https://attendance-platform.herokuapp.com/api/docs.
+> This is a backend service for Attendance Platform. Attendance Platform is used by employees to be able to log their attendance. Employees can check in and check out attendance. Employees will be able to create, edit, and delete some activities for attendance after checking in. Getting activity history by date and getting attendance history are some of the other features. Live demo https://attendance-platform.herokuapp.com/api/docs.
 
 ## Usage
 Create .env file in the root directory of your project. Add environment-specific variables on new lines in the form NAME=VALUE. For example:
