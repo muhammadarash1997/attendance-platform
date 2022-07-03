@@ -1,6 +1,19 @@
 # Attendance Platform
 > This is a simple project I used as a service for employees to be able to log their attendance. There are services for employees such as check in and check out attendance. Employees will be able to create, edit, and delete some activities for attendance. Getting activity history by date and getting attendance history are some of the other features. Live demo https://attendance-platform.herokuapp.com/api/docs.
 
+## Usage
+Create .env file in the root directory of your project. Add environment-specific variables on new lines in the form NAME=VALUE. For example:
+
+```bash
+- DB_HOST=localhost
+- DB_PORT=5432
+- DB_USER=root
+- DB_PASS=password123
+- DB_NAME=attendancedb
+- TOKEN_HOUR_LIFESPAN=24
+- SECRET_KEY=secret123
+```
+
 ## Technologies Used
 - Go 1.18
 - PostgreSQL 14
@@ -42,16 +55,3 @@ Repositories is for accessing the database and helps to extend the CRUD operatio
 
 ### Flow Chart
 ![alt text](https://github.com/muhammadarash1997/attendance-platform/blob/master/FLOWCHART.png?raw=true)
-
-## Usage
-Create .env file in the root directory of your project. Add environment-specific variables on new lines in the form NAME=VALUE. For example:
-
-```bash
-- DB_HOST=localhost
-- DB_PORT=5432
-- DB_USER=root
-- DB_PASS=password123
-- DB_NAME=attendancedb
-- TOKEN_HOUR_LIFESPAN=24
-- SECRET_KEY=secret123
-```
