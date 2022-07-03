@@ -42,3 +42,13 @@ Repositories is for accessing the database and helps to extend the CRUD operatio
 
 ### Flow Chart
 ![alt text](https://github.com/muhammadarash1997/attendance-platform/blob/master/FLOWCHART.png?raw=true)
+
+## Usage
+Create .env file in the root directory of your project. Add environment-specific variables on new lines in the form NAME=VALUE. For example:
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=root
+DB_PASS=password123
+DB_NAME=attendancedb
+TOKEN_HOUR_LIFESPAN=24
+SECRET_KEY=secret123
