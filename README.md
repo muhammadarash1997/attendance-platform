@@ -45,10 +45,13 @@ Repositories is for accessing the database and helps to extend the CRUD operatio
 
 ## Usage
 Create .env file in the root directory of your project. Add environment-specific variables on new lines in the form NAME=VALUE. For example:
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=root
-DB_PASS=password123
-DB_NAME=attendancedb
-TOKEN_HOUR_LIFESPAN=24
-SECRET_KEY=secret123
+
+```bash
+- DB_HOST=localhost
+- DB_PORT=5432
+- DB_USER=root
+- DB_PASS=password123
+- DB_NAME=attendancedb
+- TOKEN_HOUR_LIFESPAN=24
+- SECRET_KEY=secret123
+```
