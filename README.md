@@ -14,6 +14,9 @@ Create .env file in the root directory of your project. Add environment-specific
 - SECRET_KEY=secret123
 ```
 
+## Requirements
+You need PostgreSQL >= server running.
+
 ## Running App
 
 ```bash
