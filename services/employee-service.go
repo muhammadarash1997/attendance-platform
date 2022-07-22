@@ -1,9 +1,10 @@
 package services
 
 import (
-	"attendance-platform/domain"
-	"attendance-platform/dto"
-	"attendance-platform/repositories"
+	"github.com/muhammadarash1997/attendance-platform/domain"
+	"github.com/muhammadarash1997/attendance-platform/dto"
+	"github.com/muhammadarash1997/attendance-platform/repositories"
+	"github.com/muhammadarash1997/attendance-platform/utility"
 	"errors"
 	"log"
 
@@ -17,18 +18,19 @@ type EmployeeService interface {
 }
 
 type employeeService struct {
+	hasher     utility.Hasher
 	repository repositories.EmployeeRepository
 }
 
-func NewEmployeeService(repository repositories.EmployeeRepository) *employeeService {
-	return &employeeService{repository}
+func NewEmployeeService(hasher utility.Hasher, repository repositories.EmployeeRepository) *employeeService {
+	return &employeeService{hasher, repository}
 }
 
 func (this *employeeService) RegisterEmployee(registerRequest dto.RegisterRequest) error {
 	var employee domain.Employee
 
 	// Mapping RegisterRequest to Employee
-	passwordHash, err := bcrypt.GenerateFromPassword([]byte(registerRequest.Password), bcrypt.MinCost)
+	passwordHash, err := this.hasher.GenerateFromPassword([]byte(registerRequest.Password), bcrypt.MinCost)
 	if err != nil {
 		log.Printf("Error %v", err)
 		err = errors.New("Error generating password hash")
@@ -58,7 +60,7 @@ func (this *employeeService) Login(loginRequest dto.LoginRequest) (dto.LoginResp
 		return loginResponse, err
 	}
 
-	err = bcrypt.CompareHashAndPassword([]byte(employee.GetPasswordHash()), []byte(password))
+	err = this.hasher.CompareHashAndPassword([]byte(employee.GetPasswordHash()), []byte(password))
 	if err != nil {
 		log.Printf("Error %v", err)
 		err = errors.New("Wrong password")

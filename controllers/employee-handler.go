@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"attendance-platform/auth"
-	"attendance-platform/domain"
-	"attendance-platform/dto"
-	"attendance-platform/services"
+	"github.com/muhammadarash1997/attendance-platform/auth"
+	"github.com/muhammadarash1997/attendance-platform/domain"
+	"github.com/muhammadarash1997/attendance-platform/dto"
+	"github.com/muhammadarash1997/attendance-platform/services"
 	"errors"
 	"log"
 	"net/http"

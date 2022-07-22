@@ -1,9 +1,9 @@
 package services
 
 import (
-	"attendance-platform/domain"
-	"attendance-platform/dto"
-	"attendance-platform/repositories"
+	"github.com/muhammadarash1997/attendance-platform/domain"
+	"github.com/muhammadarash1997/attendance-platform/dto"
+	"github.com/muhammadarash1997/attendance-platform/repositories"
 	"errors"
 	"time"
 )

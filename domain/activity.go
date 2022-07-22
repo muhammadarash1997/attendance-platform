@@ -2,7 +2,7 @@ package domain
 
 type Activity struct {
 	ID           string `gorm:"primaryKey;type:uuid;default:gen_random_uuid()"`
-	EmployeeID       string `gorm:"type:uuid"`
+	EmployeeID   string `gorm:"type:uuid"`
 	AttendanceID string `gorm:"type:uuid"`
 	Note         string `gorm:"type:string"`
 }

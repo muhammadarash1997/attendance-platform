@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"attendance-platform/domain"
+	"github.com/muhammadarash1997/attendance-platform/domain"
 	"errors"
 	"fmt"
 	"log"
