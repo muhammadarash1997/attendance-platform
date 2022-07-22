@@ -1,4 +1,4 @@
-package repositories
+package mock
 
 import (
 	"github.com/muhammadarash1997/attendance-platform/domain"
