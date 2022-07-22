@@ -1,7 +1,7 @@
 package db
 
 import (
-	"attendance-platform/domain"
+	"github.com/muhammadarash1997/attendance-platform/domain"
 	"fmt"
 	"log"
 	"os"

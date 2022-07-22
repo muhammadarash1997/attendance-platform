@@ -1,12 +1,13 @@
 package main
 
 import (
-	"attendance-platform/auth"
-	"attendance-platform/controllers"
-	"attendance-platform/db"
-	_ "attendance-platform/docs" // This line is necessary for go-swagger to find your docs!
-	"attendance-platform/repositories"
-	"attendance-platform/services"
+	"github.com/muhammadarash1997/attendance-platform/auth"
+	"github.com/muhammadarash1997/attendance-platform/controllers"
+	"github.com/muhammadarash1997/attendance-platform/db"
+	_ "github.com/muhammadarash1997/attendance-platform/docs" // This line is necessary for go-swagger to find your docs!
+	"github.com/muhammadarash1997/attendance-platform/repositories"
+	"github.com/muhammadarash1997/attendance-platform/services"
+	"github.com/muhammadarash1997/attendance-platform/utility"
 	"net/http"
 
 	"github.com/gin-contrib/cors"
@@ -20,7 +21,8 @@ func main() {
 	db := db.StartConnection()
 
 	employeeRepository := repositories.NewEmployeeRepository(db)
-	employeeService := services.NewEmployeeService(employeeRepository)
+	hasher := utility.NewHasher()
+	employeeService := services.NewEmployeeService(hasher, employeeRepository)
 	authService := auth.NewService()
 	employeeHandler := controllers.NewEmployeeHandler(employeeService, authService)
 

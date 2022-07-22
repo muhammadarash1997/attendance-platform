@@ -24,7 +24,7 @@
 // swagger:meta
 package docs
 
-import "attendance-platform/dto"
+import "github.com/muhammadarash1997/attendance-platform/dto"
 
 // Success testing API
 // swagger:response testAPI
