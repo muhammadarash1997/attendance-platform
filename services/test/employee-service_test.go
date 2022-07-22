@@ -10,6 +10,7 @@ import (
 	"github.com/muhammadarash1997/attendance-platform/dto"
 	"github.com/muhammadarash1997/attendance-platform/repositories/mock"
 	"github.com/muhammadarash1997/attendance-platform/utility"
+	"github.com/muhammadarash1997/attendance-platform/services"
 
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/crypto/bcrypt"
@@ -21,7 +22,7 @@ func TestGetEmployee(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
 		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		password := []byte("arashpassword")
@@ -52,7 +53,7 @@ func TestGetEmployee(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
 		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		passwordHash, _ := bcrypt.GenerateFromPassword([]byte("arashpassword"), bcrypt.MinCost)
@@ -84,7 +85,7 @@ func TestRegisterEmployee(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
 		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		registerRequestMock := dto.RegisterRequest{
@@ -114,7 +115,7 @@ func TestRegisterEmployee(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
 		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		registerRequestMock := dto.RegisterRequest{
@@ -137,7 +138,7 @@ func TestRegisterEmployee(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
 		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		registerRequestMock := dto.RegisterRequest{
@@ -169,7 +170,7 @@ func TestLogin(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
 		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		loginRequestMock := dto.LoginRequest{
@@ -204,7 +205,7 @@ func TestLogin(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
 		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		loginRequestMock := dto.LoginRequest{
@@ -231,7 +232,7 @@ func TestLogin(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
 		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		loginRequestMock := dto.LoginRequest{
