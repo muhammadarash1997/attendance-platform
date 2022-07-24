@@ -12,21 +12,21 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
 
-    services:
-      todo-postgres:
-        image: postgres
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_USER: ${DB_TEST_USER}
-          POSTGRES_PASSWORD: ${DB_TEST_PASS}
-          POSTGRES_DB: ${DB_TEST_NAME}
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+    # services:
+    #   todo-postgres:
+    #     image: postgres
+    #     ports:
+    #       - 5432:5432
+    #     env:
+    #       POSTGRES_USER: ${DB_TEST_USER}
+    #       POSTGRES_PASSWORD: ${DB_TEST_PASS}
+    #       POSTGRES_DB: ${DB_TEST_NAME}
+    #     # Set health checks to wait until postgres has started
+    #     options: >-
+    #       --health-cmd pg_isready
+    #       --health-interval 10s
+    #       --health-timeout 5s
+    #       --health-retries 5
 
     steps:
     - uses: actions/checkout@v3
@@ -35,6 +35,7 @@ jobs:
       uses: actions/setup-go@v3
       with:
         go-version: 1.18
-
-    - name: Test
-      run: go test -v ./...
+    - name: Test Handler Layer
+      run: go test -v ./controllers/http-test/*_test.go
+    - name: Test Service Layer
+      run: go test -v ./controllers/http-test/*_test.go
