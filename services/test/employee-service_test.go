@@ -1,4 +1,4 @@
-package services
+package test
 
 import (
 	"errors"
@@ -9,8 +9,8 @@ import (
 	"github.com/muhammadarash1997/attendance-platform/domain"
 	"github.com/muhammadarash1997/attendance-platform/dto"
 	"github.com/muhammadarash1997/attendance-platform/repositories/mock"
-	"github.com/muhammadarash1997/attendance-platform/utility"
 	"github.com/muhammadarash1997/attendance-platform/services"
+	"github.com/muhammadarash1997/attendance-platform/utility"
 
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/crypto/bcrypt"
