@@ -36,6 +36,6 @@ jobs:
       with:
         go-version: 1.18
     - name: Test Handler Layer
-      run: go test -v ./controllers/http-test/*_test.go
+      run: go test -v .././controllers/http-test/*_test.go
     - name: Test Service Layer
-      run: go test -v ./controllers/http-test/*_test.go
+      run: go test -v .././services/unit-test/*_test.go

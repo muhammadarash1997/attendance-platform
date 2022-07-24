@@ -254,13 +254,6 @@ func TestLogin(t *testing.T) {
 		// Test
 		loginResponse, err := employeeService.Login(loginRequestMock)
 
-		// // Check
-		// assert.NotNil(t, err)
-		// assert.NotNil(t, loginResponse.Employee)
-		// assert.Equal(t, "", loginResponse.Employee.ID)
-		// assert.Equal(t, "", loginResponse.Employee.Username)
-		// assert.Equal(t, "", loginResponse.Employee.Name)
-		// assert.Equal(t, "", loginResponse.Employee.Token)
 		// Check
 		assert.NotNil(t, err)
 		assert.NotNil(t, loginResponse.Employee)
