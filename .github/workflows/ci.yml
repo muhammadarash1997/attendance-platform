@@ -13,9 +13,8 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      postgres:
+      todo-postgres:
         image: postgres
-        name: test-postgres
         ports:
           - 5432:5432
         env:
