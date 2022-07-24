@@ -34,7 +34,7 @@ func StartConnectionTest() *gorm.DB {
 	dbName := os.Getenv("DB_TEST_NAME")
 
 	// jika menggunakan heroku maka sslmode harus require (sslmode=require), jika tidak maka sslmode=disable
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", dbHost, dbUser, dbPass, dbName, dbPort)
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=require", dbHost, dbUser, dbPass, dbName, dbPort)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
