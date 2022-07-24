@@ -1,33 +1,27 @@
 package controllers
 
 import (
-	"github.com/muhammadarash1997/attendance-platform/auth"
-	"github.com/muhammadarash1997/attendance-platform/domain"
-	"github.com/muhammadarash1997/attendance-platform/dto"
-	"github.com/muhammadarash1997/attendance-platform/services"
 	"errors"
 	"log"
 	"net/http"
 	"strings"
+
+	"github.com/muhammadarash1997/attendance-platform/auth"
+	"github.com/muhammadarash1997/attendance-platform/domain"
+	"github.com/muhammadarash1997/attendance-platform/dto"
+	"github.com/muhammadarash1997/attendance-platform/services"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
 
 type EmployeeHandler struct {
-	RegisterEmployeeHandler (*gin.Context)
-	LoginHandler        (*gin.Context)
-	LogoutHandler       (*gin.Context)
-	AuthenticateHandler (*gin.Context)
-}
-
-type employeeHandler struct {
 	employeeService services.EmployeeService
-	authService auth.Service
+	authService     auth.AuthService
 }
 
-func NewEmployeeHandler(employeeService services.EmployeeService, authService auth.Service) *employeeHandler {
-	return &employeeHandler{employeeService, authService}
+func NewEmployeeHandler(employeeService services.EmployeeService, authService auth.AuthService) *EmployeeHandler {
+	return &EmployeeHandler{employeeService, authService}
 }
 
 // swagger:route POST /api/employee/register employee registerEmployee
@@ -38,7 +32,7 @@ func NewEmployeeHandler(employeeService services.EmployeeService, authService au
 //		422: errorResponse
 //		500: errorResponse
 
-func (this *employeeHandler) RegisterEmployeeHandler(c *gin.Context) {
+func (this *EmployeeHandler) RegisterEmployeeHandler(c *gin.Context) {
 	var registerRequest dto.RegisterRequest
 
 	err := c.ShouldBindJSON(&registerRequest)
@@ -78,7 +72,7 @@ func (this *employeeHandler) RegisterEmployeeHandler(c *gin.Context) {
 //		422: errorResponse
 //		500: errorResponse
 
-func (this *employeeHandler) LoginHandler(c *gin.Context) {
+func (this *EmployeeHandler) LoginHandler(c *gin.Context) {
 	var loginRequest dto.LoginRequest
 
 	err := c.ShouldBindJSON(&loginRequest)
@@ -130,7 +124,7 @@ func (this *employeeHandler) LoginHandler(c *gin.Context) {
 //		200: logoutEmployee
 //		500: errorResponse
 
-func (this *employeeHandler) LogoutHandler(c *gin.Context) {
+func (this *EmployeeHandler) LogoutHandler(c *gin.Context) {
 	currentEmployee := c.MustGet("currentEmployee").(domain.Employee)
 
 	// Rotating id and generate token
@@ -159,7 +153,7 @@ func (this *employeeHandler) LogoutHandler(c *gin.Context) {
 	})
 }
 
-func (this *employeeHandler) AuthenticateHandler(c *gin.Context) {
+func (this *EmployeeHandler) AuthenticateHandler(c *gin.Context) {
 	// Ambil token dari header
 	tokenInput := c.GetHeader("Authorization")
 

@@ -3,10 +3,10 @@ package domain
 import "time"
 
 type Attendance struct {
-	ID      string `gorm:"primaryKey;type:uuid;default:gen_random_uuid()"`
-	EmployeeID  string `gorm:"type:uuid"`
-	InDate  *time.Time
-	OutDate *time.Time
+	ID         string `gorm:"primaryKey;type:uuid;default:gen_random_uuid()"`
+	EmployeeID string `gorm:"type:uuid"`
+	InDate     *time.Time
+	OutDate    *time.Time
 }
 
 func (this *Attendance) GetID() string {

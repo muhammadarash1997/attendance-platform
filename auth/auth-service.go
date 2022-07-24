@@ -10,18 +10,18 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-type Service interface {
-	GenerateToken(userUUID string) (string, error)
-	ValidateToken(token string) (*jwt.Token, error)
+type AuthService interface {
+	GenerateToken(string) (string, error)
+	ValidateToken(string) (*jwt.Token, error)
 }
 
-type service struct{}
+type authService struct{}
 
-func NewService() *service {
-	return &service{}
+func NewAuthService() AuthService {
+	return &authService{}
 }
 
-func (this *service) GenerateToken(userUUID string) (string, error) {
+func (this *authService) GenerateToken(userUUID string) (string, error) {
 	secretKey := []byte(os.Getenv("SECRET_KEY"))
 
 	tokenHourLifespanString := os.Getenv("TOKEN_HOUR_LIFESPAN")
@@ -49,7 +49,7 @@ func (this *service) GenerateToken(userUUID string) (string, error) {
 	return tokenGenerated, nil
 }
 
-func (this *service) ValidateToken(encodedToken string) (*jwt.Token, error) {
+func (this *authService) ValidateToken(encodedToken string) (*jwt.Token, error) {
 	secretKey := []byte(os.Getenv("SECRET_KEY"))
 
 	token, err := jwt.Parse(encodedToken, func(token *jwt.Token) (interface{}, error) {
