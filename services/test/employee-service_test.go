@@ -8,8 +8,9 @@ import (
 
 	"github.com/muhammadarash1997/attendance-platform/domain"
 	"github.com/muhammadarash1997/attendance-platform/dto"
-	"github.com/muhammadarash1997/attendance-platform/repositories"
+	"github.com/muhammadarash1997/attendance-platform/repositories/mock"
 	"github.com/muhammadarash1997/attendance-platform/utility"
+	"github.com/muhammadarash1997/attendance-platform/services"
 
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/crypto/bcrypt"
@@ -20,8 +21,8 @@ func TestGetEmployee(t *testing.T) {
 	t.Run("Get Employee Success", func(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
-		employeeRepositoryMock := repositories.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		password := []byte("arashpassword")
@@ -51,8 +52,8 @@ func TestGetEmployee(t *testing.T) {
 	t.Run("Get Employee Not Found", func(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
-		employeeRepositoryMock := repositories.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		passwordHash, _ := bcrypt.GenerateFromPassword([]byte("arashpassword"), bcrypt.MinCost)
@@ -83,8 +84,8 @@ func TestRegisterEmployee(t *testing.T) {
 	t.Run("Register Employee Success", func(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
-		employeeRepositoryMock := repositories.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		registerRequestMock := dto.RegisterRequest{
@@ -113,8 +114,8 @@ func TestRegisterEmployee(t *testing.T) {
 	t.Run("Register Employee Failed Generating Password Hash From Password", func(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
-		employeeRepositoryMock := repositories.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		registerRequestMock := dto.RegisterRequest{
@@ -136,8 +137,8 @@ func TestRegisterEmployee(t *testing.T) {
 	t.Run("Register Employee Failed Saving Employee", func(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
-		employeeRepositoryMock := repositories.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		registerRequestMock := dto.RegisterRequest{
@@ -168,8 +169,8 @@ func TestLogin(t *testing.T) {
 	t.Run("Login Success", func(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
-		employeeRepositoryMock := repositories.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		loginRequestMock := dto.LoginRequest{
@@ -203,8 +204,8 @@ func TestLogin(t *testing.T) {
 	t.Run("Login Failed Username Hasn't Been Registered", func(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
-		employeeRepositoryMock := repositories.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		loginRequestMock := dto.LoginRequest{
@@ -230,8 +231,8 @@ func TestLogin(t *testing.T) {
 	t.Run("Login Failed Wrong Password", func(t *testing.T) {
 		// Register test mock and create service with passing mock
 		hasherMock := utility.NewHasherMock()
-		employeeRepositoryMock := repositories.NewEmployeeRepositoryMock()
-		employeeService := NewEmployeeService(hasherMock, employeeRepositoryMock)
+		employeeRepositoryMock := mock.NewEmployeeRepositoryMock()
+		employeeService := services.NewEmployeeService(hasherMock, employeeRepositoryMock)
 
 		// Dummy data
 		loginRequestMock := dto.LoginRequest{

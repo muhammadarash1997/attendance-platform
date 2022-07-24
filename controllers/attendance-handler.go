@@ -1,26 +1,21 @@
 package controllers
 
 import (
+	"net/http"
+
 	"github.com/muhammadarash1997/attendance-platform/domain"
 	"github.com/muhammadarash1997/attendance-platform/dto"
 	"github.com/muhammadarash1997/attendance-platform/services"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-type AttendanceHandler interface {
-	CheckInHandler(*gin.Context)
-	CheckOutHandler(*gin.Context)
-	GetAllEmployeeAttendanceHandler(*gin.Context)
-}
-
-type attendanceHandler struct {
+type AttendanceHandler struct {
 	attendanceService services.AttendanceService
 }
 
-func NewAttendanceHandler(attendanceService services.AttendanceService) *attendanceHandler {
-	return &attendanceHandler{attendanceService}
+func NewAttendanceHandler(attendanceService services.AttendanceService) *AttendanceHandler {
+	return &AttendanceHandler{attendanceService}
 }
 
 // swagger:route GET /api/attendance/checkin attendance checkIn
@@ -32,7 +27,7 @@ func NewAttendanceHandler(attendanceService services.AttendanceService) *attenda
 //		200: checkIn
 //		500: errorResponse
 
-func (this *attendanceHandler) CheckInHandler(c *gin.Context) {
+func (this *AttendanceHandler) CheckInHandler(c *gin.Context) {
 	currentEmployee := c.MustGet("currentEmployee").(domain.Employee)
 
 	checkInResponse, err := this.attendanceService.CheckIn(currentEmployee.GetID())
@@ -61,7 +56,7 @@ func (this *attendanceHandler) CheckInHandler(c *gin.Context) {
 //		200: checkOut
 //		500: errorResponse
 
-func (this *attendanceHandler) CheckOutHandler(c *gin.Context) {
+func (this *AttendanceHandler) CheckOutHandler(c *gin.Context) {
 	attendanceID := c.Params.ByName("attendance_id")
 
 	checkInResponse, err := this.attendanceService.CheckOut(attendanceID)
@@ -90,7 +85,7 @@ func (this *attendanceHandler) CheckOutHandler(c *gin.Context) {
 //		200: getAllEmployeeAttendance
 //		500: errorResponse
 
-func (this *attendanceHandler) GetAllEmployeeAttendanceHandler(c *gin.Context) {
+func (this *AttendanceHandler) GetAllEmployeeAttendanceHandler(c *gin.Context) {
 	currentEmployee := c.MustGet("currentEmployee").(domain.Employee)
 
 	getAllEmployeeAttendanceResponse, err := this.attendanceService.GetAllEmployeeAttendance(currentEmployee.ID)

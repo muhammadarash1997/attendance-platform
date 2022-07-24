@@ -105,8 +105,8 @@ type checkOut struct {
 type getAllEmployeeAttendance struct {
 	// in: Body
 	Body struct {
-		Code   int                              `json:"code"`
-		Status string                           `json:"status"`
+		Code   int                                  `json:"code"`
+		Status string                               `json:"status"`
 		Data   dto.GetAllEmployeeAttendanceResponse `json:"data"`
 	}
 }
@@ -149,8 +149,8 @@ type deleteActivity struct {
 type getEmployeeActivitiesByDate struct {
 	// in: Body
 	Body struct {
-		Code   int                                 `json:"code"`
-		Status string                              `json:"status"`
+		Code   int                                     `json:"code"`
+		Status string                                  `json:"status"`
 		Data   dto.GetEmployeeActivitiesByDateResponse `json:"data"`
 	}
 }

@@ -1,29 +1,23 @@
 package controllers
 
 import (
-	"github.com/muhammadarash1997/attendance-platform/domain"
-	"github.com/muhammadarash1997/attendance-platform/dto"
-	"github.com/muhammadarash1997/attendance-platform/services"
 	"errors"
 	"log"
 	"net/http"
 
+	"github.com/muhammadarash1997/attendance-platform/domain"
+	"github.com/muhammadarash1997/attendance-platform/dto"
+	"github.com/muhammadarash1997/attendance-platform/services"
+
 	"github.com/gin-gonic/gin"
 )
 
-type ActivityHandler interface {
-	CreateActivityHandler(*gin.Context)
-	UpdateActivityHandler(c *gin.Context)
-	DeleteActivityHandler(c *gin.Context)
-	GetEmployeeActivitiesByDateHandler(c *gin.Context)
-}
-
-type activityHandler struct {
+type ActivityHandler struct {
 	activityService services.ActivityService
 }
 
-func NewActivityHandler(activityService services.ActivityService) *activityHandler {
-	return &activityHandler{activityService}
+func NewActivityHandler(activityService services.ActivityService) *ActivityHandler {
+	return &ActivityHandler{activityService}
 }
 
 // swagger:route POST /api/activity activity createActivity
@@ -36,7 +30,7 @@ func NewActivityHandler(activityService services.ActivityService) *activityHandl
 //		422: errorResponse
 //		500: errorResponse
 
-func (this *activityHandler) CreateActivityHandler(c *gin.Context) {
+func (this *ActivityHandler) CreateActivityHandler(c *gin.Context) {
 	var createActivityRequest dto.CreateActivityRequest
 
 	err := c.ShouldBindJSON(&createActivityRequest)
@@ -78,7 +72,7 @@ func (this *activityHandler) CreateActivityHandler(c *gin.Context) {
 //		422: errorResponse
 //		500: errorResponse
 
-func (this *activityHandler) UpdateActivityHandler(c *gin.Context) {
+func (this *ActivityHandler) UpdateActivityHandler(c *gin.Context) {
 	var updateActivityRequest dto.UpdateActivityRequest
 
 	err := c.ShouldBindJSON(&updateActivityRequest)
@@ -119,7 +113,7 @@ func (this *activityHandler) UpdateActivityHandler(c *gin.Context) {
 //		200: deleteActivity
 //		500: errorResponse
 
-func (this *activityHandler) DeleteActivityHandler(c *gin.Context) {
+func (this *ActivityHandler) DeleteActivityHandler(c *gin.Context) {
 	activityID := c.Params.ByName("activity_id")
 
 	err := this.activityService.DeleteActivity(activityID)
@@ -148,7 +142,7 @@ func (this *activityHandler) DeleteActivityHandler(c *gin.Context) {
 //		200: getEmployeeActivitiesByDate
 //		500: errorResponse
 
-func (this *activityHandler) GetEmployeeActivitiesByDateHandler(c *gin.Context) {
+func (this *ActivityHandler) GetEmployeeActivitiesByDateHandler(c *gin.Context) {
 	currentEmployee := c.MustGet("currentEmployee").(domain.Employee)
 	date := c.Params.ByName("date")
 

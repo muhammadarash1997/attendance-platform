@@ -1,17 +1,18 @@
 package main
 
 import (
-	"github.com/muhammadarash1997/attendance-platform/auth"
-	"github.com/muhammadarash1997/attendance-platform/controllers"
-	"github.com/muhammadarash1997/attendance-platform/db"
-	_ "github.com/muhammadarash1997/attendance-platform/docs" // This line is necessary for go-swagger to find your docs!
-	"github.com/muhammadarash1997/attendance-platform/repositories"
-	"github.com/muhammadarash1997/attendance-platform/services"
-	"github.com/muhammadarash1997/attendance-platform/utility"
 	"net/http"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/muhammadarash1997/attendance-platform/auth"
+	"github.com/muhammadarash1997/attendance-platform/controllers"
+	_ "github.com/muhammadarash1997/attendance-platform/docs" // This line is necessary for go-swagger to find your docs!
+	"github.com/muhammadarash1997/attendance-platform/infra/db"
+	"github.com/muhammadarash1997/attendance-platform/repositories"
+	"github.com/muhammadarash1997/attendance-platform/services"
+	"github.com/muhammadarash1997/attendance-platform/utility"
+
 	"github.com/joho/godotenv"
 )
 
@@ -23,7 +24,7 @@ func main() {
 	employeeRepository := repositories.NewEmployeeRepository(db)
 	hasher := utility.NewHasher()
 	employeeService := services.NewEmployeeService(hasher, employeeRepository)
-	authService := auth.NewService()
+	authService := auth.NewAuthService()
 	employeeHandler := controllers.NewEmployeeHandler(employeeService, authService)
 
 	attendanceRepository := repositories.NewAttendanceRepository(db)

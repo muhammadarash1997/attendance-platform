@@ -1,10 +1,11 @@
 package db
 
 import (
-	"github.com/muhammadarash1997/attendance-platform/domain"
 	"fmt"
 	"log"
 	"os"
+
+	"github.com/muhammadarash1997/attendance-platform/domain"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
